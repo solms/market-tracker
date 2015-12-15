@@ -1,3 +1,12 @@
 body{
 	font-family: 'Roboto', sans-serif;
 }
+
+/* Style the selected stocks */
+#selected-stocks{
+	padding: 50px;
+}
+.selected-stock{
+	float: left;
+	width: 100px;
+}

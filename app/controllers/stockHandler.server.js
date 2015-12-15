@@ -13,15 +13,15 @@ module.exports = function(db){
 
   this.addStock = function(req, res){
     stocks.insert({
-      'code': req.body.code
+      'code': req.query.code
     });
-    console.log('Added stock with code "' + req.body.code + '" to the database.');
+    res.send('Added stock with code "' + req.query.code + '" to the database.');
   };
 
   this.removeStock = function(req, res){
     stocks.remove({
-      'code': req.body.code
+      'code': req.query.code
     });
-    console.log('Removed ' + JSON.stringify(req.body));
+    res.send('Removed ' + JSON.stringify(req.query.code));
   };
 }

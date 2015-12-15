@@ -2,30 +2,38 @@
 
 (function () {
 	angular
-		.module('marketTrackerApp', ['ngResource'])
+		.module('marketTrackerApp', [])
 		.controller('stockController',
 			['$scope',
-			'$resource',
-			function ($scope, $resource) {
-				var Stocks = $resource('/api/stocks');
+			'$http',
+			function ($scope, $http) {
+				$scope.stocks = [];
 
 				$scope.showStocks = function () {
-					Stocks.query(function (results){
-						$scope.stocks = results;
-						console.log('Results: ' + JSON.stringify(results));
-					})
-				}
-
-				$scope.addStock = function () {
-					Stocks.save({'code':'TEMP2'} ,function () {
-
+					$http.get('/api/stocks')
+						.success(function(response){
+							$scope.stocks = [];
+							for(var i=0; i<response.length; i++){
+								$scope.stocks.push(response[i]);
+							}
 					});
+				}
+				$scope.showStocks();
+
+				$scope.addStock = function (to_add) {
+					$http.post('/api/stocks?code=' + to_add)
+						.success(function(response){
+							$scope.showStocks();
+							console.log(response);
+						});
 				};
 
-				$scope.removeStock = function(){
-					Stocks.remove({'code':'TEMP'},function(){
-
-					})
+				$scope.removeStock = function(to_delete){
+					$http.delete('/api/stocks?code=' + to_delete)
+						.success(function(response){
+							$scope.showStocks();
+							console.log(response);
+						});
 				}
 		}]);
 })();
