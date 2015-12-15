@@ -1,12 +1,19 @@
 body{
 	font-family: 'Roboto', sans-serif;
+	text-align: center;
 }
 
 /* Style the selected stocks */
 #selected-stocks{
-	padding: 50px;
+	padding: 15px;
+	border-style: solid;
+	border-radius: 2px;
+	border-width: thin;
 }
 .selected-stock{
-	float: left;
+	display: inline-block;
+	list-style-type: none;
 	width: 100px;
+	background-color: #AA55B0;
+	margin: 5px;
 }
