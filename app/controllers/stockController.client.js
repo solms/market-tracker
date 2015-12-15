@@ -26,19 +26,18 @@
 						close: []
 					};
 					getStock(to_add).success(function(data){
+						console.log('Successfully got data via YQL.');
 						var results = data.query.results.quote;
-						console.log(results);
 						for (var i=0; i<results.length; i++){
 							stock_obj.date.push(results[i].Date);
 							stock_obj.close.push(results[i].Close);
 						}
-						console.log(stock_obj);
+						$http.post('/api/stocks?code=' + to_add)
+							.success(function(response){
+								showStocks();
+								console.log(response);
+							});
 					});
-					$http.post('/api/stocks?code=' + to_add)
-						.success(function(response){
-							showStocks();
-							console.log(response);
-						});
 				};
 
 				$scope.removeStock = function(to_delete){
