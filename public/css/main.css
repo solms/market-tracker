@@ -4,12 +4,6 @@ body{
 }
 
 /* Style the selected stocks */
-#selected-stocks{
-	padding: 15px;
-	border-style: solid;
-	border-radius: 2px;
-	border-width: thin;
-}
 .selected-stock{
 	display: inline-block;
 	list-style-type: none;

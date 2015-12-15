@@ -10,17 +10,12 @@
 	<body>
 		<h1>Market Tracker</h1>
 
-		<div class="container">
-			<p>
-				TODO: A short description.
-			</p>
-		</div>
-
 		<div class="container" ng-controller="stockController">
 
 			TODO: The graph goes here.
 
 			<div id="selected-stocks">
+				<hr>
 				<ul>
 					<li ng-repeat="stock in stocks" class="selected-stock" ng-click="removeStock(stock.code)">
 						{{stock.code}}
