@@ -12,9 +12,10 @@ module.exports = function(db){
   };
 
   this.addStock = function(req, res){
-    stocks.insert({
+    var doc = {
       'code': req.query.code
-    });
+    };
+    stocks.update(doc, doc, {upsert: true});
     res.send('Added stock with code "' + req.query.code + '" to the database.');
   };
 
