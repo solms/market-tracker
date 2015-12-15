@@ -3,6 +3,7 @@
 var express = require('express');
 var routes = require('./app/routes/index.js');
 var mongo = require('mongodb').MongoClient;
+var bodyParser = require('body-parser')
 
 var app = express();
 
@@ -16,6 +17,10 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
 
 	app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 	app.use('/public', express.static(process.cwd() + '/public'));
+	app.use( bodyParser.json() );       // to support JSON-encoded bodies
+	app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+	  extended: true
+	}));
 
 	routes(app, db);
 
@@ -25,4 +30,3 @@ mongo.connect('mongodb://localhost:27017/clementinejs', function (err, db) {
 	});
 
 });
-
