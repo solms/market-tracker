@@ -11,3 +11,11 @@ body{
 	background-color: #AA55B0;
 	margin: 5px;
 }
+
+/* Style the SVG element */
+.graph{
+	height: 300px;
+	width: 90%;
+	border-style: solid;
+	border-width: thin;
+}

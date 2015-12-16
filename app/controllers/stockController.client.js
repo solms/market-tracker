@@ -26,17 +26,22 @@
 						close: []
 					};
 					getStock(to_add).success(function(data){
-						console.log('Successfully got data via YQL.');
-						var results = data.query.results.quote;
-						for (var i=0; i<results.length; i++){
-							stock_obj.date.push(results[i].Date);
-							stock_obj.close.push(results[i].Close);
-						}
-						$http.post('/api/stocks?code=' + to_add)
-							.success(function(response){
-								showStocks();
-								console.log(response);
-							});
+						if(data.query.results != null){
+							console.log('Successfully got data via YQL.');
+							var results = data.query.results.quote;
+							for (var i=0; i<results.length; i++){
+								stock_obj.date.push(results[i].Date);
+								stock_obj.close.push(results[i].Close);
+							}
+							console.log(stock_obj);
+							$http.post('/api/stocks?code=' + to_add)
+								.success(function(response){
+									showStocks();
+									console.log(response);
+								});
+							} else {
+								console.log('Could not find stock on YQL.');
+							}
 					});
 				};
 
@@ -49,7 +54,14 @@
 				}
 
 				var getStock = function(symbol){
-					return $http.get('http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol = "' + symbol + '" and startDate = "2015-12-10" and endDate = "2015-12-14"&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys');
+					var date 						= new Date();
+					var yql_end_date 		= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+					console.log('End date: ' + yql_end_date);
+					date.setDate(date.getDate()-30);
+					var yql_start_date 	= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+					console.log('Start date: ' + yql_start_date);
+
+					return $http.get('http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol = "' + symbol + '" and startDate = "'+yql_start_date+'" and endDate = "'+yql_end_date+'"&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys');
 				}
 		}]);
 })();
