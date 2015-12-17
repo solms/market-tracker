@@ -21,20 +21,24 @@
 				showStocks();
 
 				$scope.addStock = function (to_add) {
-					var stock_obj = {
-						date: [],
-						close: []
-					};
+					var stocks_arr = [];
+					// Retrieve the stock data with Yahoo Query Language
+					// and add it to the database if successful
 					getStock(to_add).success(function(data){
+						// Check if info on the specified stock code is found
 						if(data.query.results != null){
 							console.log('Successfully got data via YQL.');
+							// Create an array of stock objects to use for graphing
 							var results = data.query.results.quote;
 							for (var i=0; i<results.length; i++){
-								stock_obj.date.push(results[i].Date);
-								stock_obj.close.push(Number(results[i].Close));
+								stocks_arr.push({
+									date: i,
+									close: Number(results[i].Close)
+								})
 							}
-							console.log(stock_obj);
-							render(stock_obj);
+							// Render the graph
+							render2(stocks_arr);
+							// Add the stock code to the database
 							$http.post('/api/stocks?code=' + to_add)
 								.success(function(response){
 									showStocks();
@@ -65,32 +69,32 @@
 					return $http.get('http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol = "' + symbol + '" and startDate = "'+yql_start_date+'" and endDate = "'+yql_end_date+'"&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys');
 				}
 
-				var render = function(data){
-					var outerWidth = 500;
-					var outerHeight = 300;
-					var margin = {top: 30, right: 30, bottom: 30, left: 30};
-					var xColumn = 'date';
-					var yColumn = 'close'; 	// Closing price
+				var render2 = function(dddd){
+					var svg = d3.select("#graph-div").append("svg")
+		        .attr("width",  500)
+		        .attr("height", 300);
 
-					var svg = d3.select("body").append("svg")
-			      .attr("width",  outerWidth)
-			      .attr("height", outerHeight);
-					var g = svg.append('g');
-					var path = g.append('path');
+		      var xScale = d3.scale.linear().range([0, 500]);
+		      var yScale = d3.scale.linear().range([0, 300]);
 
-					var innerWidth  = outerWidth  - margin.left - margin.right;
-					var innerHeight = outerHeight - margin.top  - margin.bottom;
+		      function render(data){
 
-					var xScale = d3.scale.linear().range([0, innerWidth]);
-					var yScale = d3.scale.linear().range([innerHeight, 0]);
+						console.log('Made it in with:');
+						console.log(data);
 
-					var line = d3.svg.line()
-		        .x(function(d) { return xScale(d[xColumn]); })
-		        .y(function(d) { return yScale(d[yColumn]); });
+		        xScale.domain(d3.extent(data, function (d){ return d.date; }));
+		        yScale.domain(d3.extent(data, function (d){ return d.close; }));
 
-					xScale.domain( d3.extent(data, function (d){ return d[xColumn]; }));
-	        yScale.domain( d3.extent(data, function (d){ return d[yColumn]; }));
-	        path.attr("d", line(data));
+		        var circles = svg.selectAll("circle").data(data);
+		        circles.enter().append("circle").attr("r", 10);
+		        circles
+		          .attr("cx", function (d){ return xScale(d.date); })
+		          .attr("cy", function (d){ return yScale(d.close); });
+
+		        circles.exit().remove();
+		      }
+
+		      render(dddd);
 
 				};
 		}]);
