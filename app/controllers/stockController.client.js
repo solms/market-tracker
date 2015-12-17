@@ -10,11 +10,28 @@
 				$scope.stocks = [];
 
 				// Set up graphing area
+				var outerWidth  = 500,
+						outerHeight = 300;
+				var margin = { top: 50, right: 50, bottom: 50, left:	50 };
+				var xColumn = 'date';
+				var yColumn = 'close';
+
 				var svg = d3.select("#graph-div").append("svg")
-					.attr("width",  500)
-					.attr("height", 300);
-				var xScale = d3.scale.linear().range([0, 500]);
-				var yScale = d3.scale.linear().range([0, 300]);
+					.attr("width",  outerWidth)
+					.attr("height", outerHeight);
+				var g = svg.append("g")
+	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				var path = g.append('path');
+
+				var innerWidth  = outerWidth  - margin.left - margin.right;
+	      var innerHeight = outerHeight - margin.top  - margin.bottom;
+
+				var xScale = d3.scale.linear().range([0, innerWidth]);
+				var yScale = d3.scale.linear().range([0, innerHeight]);
+
+				var line = d3.svg.line()
+					.x(function(d) { return xScale(d[xColumn]); })
+					.y(function(d) { return yScale(d[yColumn]); });
 
 				var showStocks = function () {
 					$http.get('/api/stocks')
@@ -78,16 +95,9 @@
 				}
 
 				var render = function(data){
-	        xScale.domain(d3.extent(data, function (d){ return d.date; }));
-	        yScale.domain(d3.extent(data, function (d){ return d.close; }));
-
-	        var circles = svg.selectAll("circle").data(data);
-	        circles.enter().append("circle").attr("r", 5);
-	        circles
-	          .attr("cx", function (d){ return xScale(d.date); })
-	          .attr("cy", function (d){ return yScale(d.close); });
-
-	        circles.exit().remove();
+	        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
+	        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
+					path.attr('d', line(data));
 	      };
 		}]);
 })();

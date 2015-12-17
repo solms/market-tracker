@@ -20,3 +20,8 @@ body{
 	border-style: solid;
 	border-width: thin;
 }
+path{
+	fill: none;
+	stroke: black;
+	stroke-width: 2px;
+}
