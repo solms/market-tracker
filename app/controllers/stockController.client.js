@@ -23,7 +23,6 @@
 					.attr("height", outerHeight);
 				var g = svg.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-				var path = g.append('path');
 
 				var innerWidth  = outerWidth  - margin.left - margin.right;
 	      var innerHeight = outerHeight - margin.top  - margin.bottom;
@@ -33,7 +32,7 @@
 				var yAxisG = g.append("g");
 
 				var xScale = d3.scale.linear().range([0, innerWidth]);
-				var yScale = d3.scale.linear().range([0, innerHeight]);
+				var yScale = d3.scale.linear().range([innerHeight, 0]);
 
 				var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 				var yAxis = d3.svg.axis().scale(yScale).orient("left");
@@ -70,7 +69,8 @@
 								})
 							}
 							// Render the graph
-							render(stocks_arr);
+							var path = g.append('path');
+							render(path, stocks_arr);
 							// Add the stock code to the database
 							$http.post('/api/stocks?code=' + to_add)
 								.success(function(response){
@@ -103,7 +103,7 @@
 				}
 
 				// Render the line graph
-				var render = function(data){
+				var render = function(path, data){
 	        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
 	        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
 					path.attr('d', line(data));
