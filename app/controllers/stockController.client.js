@@ -18,28 +18,33 @@
 				var xColumn = 'date';
 				var yColumn = 'close';
 
-				var svg = d3.select("#graph-div").append("svg")
-					.attr("width",  outerWidth)
-					.attr("height", outerHeight);
+				var innerWidth = outerWidth - margin.left - margin.right;
+				var innerHeight = outerHeight - margin.top - margin.bottom;
+
+				var xScale = d3.scale.linear()
+					.range([0, innerWidth]);
+				var yScale = d3.scale.linear()
+					.range([innerHeight, 0]);
+
+				var colorScale = d3.scale.category10();
+
+				var xAxis = d3.svg.axis()
+					.scale(xScale)
+					.orient('bottom');
+				var yAxis = d3.svg.axis()
+					.scale(yScale)
+					.orient('left');
+
+				var svg = d3.select('#graph-div').append('svg')
+					.attr('width', outerWidth)
+					.attr('height', outerHeight);
+
 				var g = svg.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-				var innerWidth  = outerWidth  - margin.left - margin.right;
-	      var innerHeight = outerHeight - margin.top  - margin.bottom;
-
-				var xAxisG = g.append("g")
-        	.attr("transform", "translate(0," + innerHeight + ")");
-				var yAxisG = g.append("g");
-
-				var xScale = d3.scale.linear().range([0, innerWidth]);
-				var yScale = d3.scale.linear().range([innerHeight, 0]);
-
-				var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-				var yAxis = d3.svg.axis().scale(yScale).orient("left");
-
 				var line = d3.svg.line()
-					.x(function(d) { return xScale(d[xColumn]); })
-					.y(function(d) { return yScale(d[yColumn]); });
+	        .x(function(d) { return xScale(d[xColumn]); })
+	        .y(function(d) { return yScale(d[yColumn]); });
 
 				var showStocks = function () {
 					$http.get('/api/stocks')
@@ -61,16 +66,23 @@
 							console.log('Successfully got data via YQL.');
 							// Create an array of stock objects to use for graphing
 							var results = data.query.results.quote;
+							var stock_values = [];
 							for (var i=0; i<results.length; i++){
-								stocks_arr.push({
-									code: to_add,
+								stock_values.push({
 									date: i,
 									close: Number(results[i].Close)
 								})
 							}
+							stocks_arr.push({
+								name: to_add,
+								values: stock_values
+							});
+							console.log(stocks_arr);
+							render(stocks_arr);
+							/*
 							// Render the graph
 							var path = g.append('path');
-							render(path, stocks_arr);
+							render(path, stocks_arr);*/
 							// Add the stock code to the database
 							$http.post('/api/stocks?code=' + to_add)
 								.success(function(response){
@@ -103,12 +115,34 @@
 				}
 
 				// Render the line graph
-				var render = function(path, data){
+				var render = function(data){
+					//	Clear the SVG canvas
+					g.selectAll("path").remove();
+
+					// Determine the domain
+					var max = 0;
+					for(var i=0; i<data.length; i++){
+						var temp = d3.max(data[i].values, function (d) { return d[yColumn] });
+						if(temp>max){
+							max = temp;
+						}
+					}
+
+					// Set the domain
+					xScale.domain([0, 25]);
+	        yScale.domain([0, max]);
+
+					for(var i=0; i<data.length; i++){
+						var path = g.append("path");
+						path.attr("d", line(data[i].values));
+					}
+					/*
 	        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
 	        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
 					path.attr('d', line(data));
 					xAxisG.call(xAxis);
 					yAxisG.call(yAxis);
+					*/
 	      };
 		}]);
 })();
