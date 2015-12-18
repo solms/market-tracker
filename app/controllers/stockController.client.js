@@ -56,10 +56,15 @@
 							for(var i=0; i<response.length; i++){
 								$scope.stocks.push(response[i]);
 							}
+							// If $scope.stocks is empty, delete all graphs
+							if($scope.stocks.length == 0){
+								render([]);
+							}
 							// Update the local array for graphing the stocks
 							for(var i=0; i<$scope.stocks.length; i++){
 								// Get the info for each stock from YQL finance, and then update
 								// the local array of stock objects for graphing
+								stocks_arr = [];
 								getStockInfo($scope.stocks[i].code)
 									.success(function(data){
 										// Redundant, but check that the data exists anyway
@@ -89,6 +94,7 @@
 							$http.post('/api/stocks?code=' + to_add)
 								.success(function(response){
 									showStocks();
+									console.log(response);
 								});
 							} else {
 								console.log('Could not retrieve stock data from YQL.');
