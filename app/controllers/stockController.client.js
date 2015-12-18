@@ -28,19 +28,23 @@
 
 				var colorScale = d3.scale.category10();
 
-				var xAxis = d3.svg.axis()
-					.scale(xScale)
-					.orient('bottom');
-				var yAxis = d3.svg.axis()
-					.scale(yScale)
-					.orient('left');
-
 				var svg = d3.select('#graph-div').append('svg')
 					.attr('width', outerWidth)
 					.attr('height', outerHeight);
 
 				var g = svg.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+				var xAxisG = g.append("g")
+		      .attr("class", "x axis")
+		      .attr("transform", "translate(0," + innerHeight + ")");
+		    var yAxisG = g.append("g")
+		      .attr("class", "y axis");
+
+				var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
+	        .outerTickSize(0);          // Turn off the marks at the end of the axis.
+	      var yAxis = d3.svg.axis().scale(yScale).orient("left")
+	        .outerTickSize(0);          // Turn off the marks at the end of the axis.
 
 				var line = d3.svg.line()
 	        .x(function(d) { return xScale(d[xColumn]); })
@@ -135,7 +139,7 @@
 																	function (d) { return d[yColumn] });
 						if(curr_max>max){
 							if(max == 0){
-								min = max;
+								min = curr_max;
 							}
 							max = curr_max;
 						}
@@ -149,6 +153,10 @@
 					// Set the domain
 					xScale.domain([0, 25]);
 	        yScale.domain([min, max]);
+
+					// Call the axes
+					xAxisG.call(xAxis);
+					yAxisG.call(yAxis);
 
 					for(var i=0; i<data.length; i++){
 						var path = g.append("path");

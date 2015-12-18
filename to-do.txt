@@ -1,0 +1,4 @@
+- Fix axis
+- Different colours
+- Make dates show on X axis
+- Make time frame variable
