@@ -2,3 +2,4 @@
 - Different colours
 - Make dates show on X axis
 - Make time frame variable
+- Make graph width reactive

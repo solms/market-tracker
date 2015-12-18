@@ -15,8 +15,8 @@ body{
 /* Style the SVG element */
 #graph-div{
 	margin: 0 auto;
-	height: 300px;
-	width: 500px;
+	height: 350px;
+	width: 1000px;
 	border-style: solid;
 	border-width: thin;
 }

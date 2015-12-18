@@ -12,8 +12,8 @@
 				var stocks_arr = [];
 
 				// Set up graphing area
-				var outerWidth  = 500,
-						outerHeight = 300;
+				var outerWidth  = 1000,
+						outerHeight = 350;
 				var margin = { top: 50, right: 50, bottom: 50, left:	50 };
 				var xColumn = 'date';
 				var yColumn = 'close';
@@ -119,7 +119,7 @@
 					var date 						= new Date();
 					var yql_end_date 		= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
 					console.log('End date: ' + yql_end_date);
-					date.setDate(date.getDate()-30);
+					date.setDate(date.getDate()-365);
 					var yql_start_date 	= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
 					console.log('Start date: ' + yql_start_date);
 
@@ -151,7 +151,7 @@
 					}
 
 					// Set the domain
-					xScale.domain([0, 25]);
+					xScale.domain([0, data[0].values.length]);
 	        yScale.domain([min, max]);
 
 					// Call the axes
@@ -170,6 +170,7 @@
 					yAxisG.call(yAxis);
 					*/
 	      };
+
 
 				/* 	Populate a local array with stock information to be used for graphing
 				 		Format:
