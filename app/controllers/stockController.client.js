@@ -21,7 +21,7 @@
 				var innerWidth = outerWidth - margin.left - margin.right;
 				var innerHeight = outerHeight - margin.top - margin.bottom;
 
-				var xScale = d3.scale.linear()
+				var xScale = d3.time.scale()
 					.range([0, innerWidth]);
 				var yScale = d3.scale.linear()
 					.range([innerHeight, 0]);
@@ -162,7 +162,7 @@
 
 					// Set the domain
 					if(data[0] != undefined){
-						xScale.domain([0, data[0].values.length]);
+						xScale.domain([stocks_arr[0].values[0].date, stocks_arr[0].values[stocks_arr[0].values.length-1].date]);
 						yScale.domain([min, max]);
 					}
 
@@ -196,7 +196,7 @@
 					var stock_values = [];
 					for (var i=0; i<results.length; i++){
 						stock_values.push({
-							date: i,
+							date: new Date(results[i].Date),
 							close: Number(results[i].Close)
 						})
 					}
