@@ -12,9 +12,9 @@
 				var stocks_arr = [];
 
 				// Set up graphing area
-				var outerWidth  = 1000,
+				var outerWidth  = 1100,
 						outerHeight = 350;
-				var margin = { top: 50, right: 50, bottom: 50, left:	50 };
+				var margin = { top: 50, right: 100, bottom: 50, left:	100 };
 				var xColumn = 'date';
 				var yColumn = 'close';
 
@@ -38,8 +38,18 @@
 				var xAxisG = g.append("g")
 		      .attr("class", "x axis")
 		      .attr("transform", "translate(0," + innerHeight + ")");
+				var xAxisLabel = xAxisG.append("text")
+	        .style("text-anchor", "middle")
+	        .attr("transform", "translate(" + (innerWidth / 2) + "," + 40 + ")")
+	        .attr("class", "label")
+	        .text('Date');
 		    var yAxisG = g.append("g")
 		      .attr("class", "y axis");
+				var yAxisLabel = yAxisG.append("text")
+	        .style("text-anchor", "middle")
+	        .attr("transform", "translate(-" + 50 + "," + (innerHeight / 2) + ") rotate(-90)")
+	        .attr("class", "label")
+	        .text('Price per share ($)');
 
 				var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
 	        .outerTickSize(0);          // Turn off the marks at the end of the axis.
@@ -151,8 +161,10 @@
 					}
 
 					// Set the domain
-					xScale.domain([0, data[0].values.length]);
-	        yScale.domain([min, max]);
+					if(data[0] != undefined){
+						xScale.domain([0, data[0].values.length]);
+						yScale.domain([min, max]);
+					}
 
 					// Call the axes
 					xAxisG.call(xAxis);
