@@ -166,7 +166,8 @@
 
 					// Set the domain
 					if(data[0] != undefined){
-						xScale.domain([stocks_arr[0].values[0].date, stocks_arr[0].values[stocks_arr[0].values.length-1].date]);
+						xScale.domain([stocks_arr[0].values[stocks_arr[0].values.length-1].date,
+														stocks_arr[0].values[0].date]);
 						yScale.domain([min, max]);
 					}
 
@@ -178,13 +179,6 @@
 						var path = g.append("path");
 						path.attr("d", line(data[i].values));
 					}
-					/*
-	        xScale.domain(d3.extent(data, function (d){ return d[xColumn]; }));
-	        yScale.domain(d3.extent(data, function (d){ return d[yColumn]; }));
-					path.attr('d', line(data));
-					xAxisG.call(xAxis);
-					yAxisG.call(yAxis);
-					*/
 	      };
 
 
