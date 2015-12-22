@@ -107,6 +107,7 @@
 						// Check if info on the specified stock code is found
 						var results = data.query.results.quote;
 						if(results != null){
+							$scope.stock_to_add = '';
 							console.log('Successfully got data via YQL.');
 							$http.post('/api/stocks?code=' + to_add)
 								.success(function(response){

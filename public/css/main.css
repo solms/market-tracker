@@ -41,9 +41,32 @@ path{
 	stroke-width: 2px;
 }
 
+/*  Styke the 'add stock' input */
+input[type="text"] {
+  width: 300px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+input[type="text"]:focus {
+  outline: none;
+}
+#add-stock-input {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+#add-stock-input:focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+
 /*  Style the timeframe buttons */
 .timeframe-btn {
 	margin-top: 10px;
+	margin-bottom: 20px;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
   background-image: -moz-linear-gradient(top, #3498db, #2980b9);

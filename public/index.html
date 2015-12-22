@@ -26,13 +26,13 @@
 				</button>
 			</div>
 			<div id="selected-stocks">
+				<input type="text" id="add-stock-input" placeholder="Enter stock code..." ng-keyup="$event.keyCode == 13 && addStock(stock_to_add)" ng-model="stock_to_add" />
+				<!--<button type="button" ng-click="addStock(stock_to_add)">Add stock</button>!-->
 				<ul>
 					<li ng-repeat="stock in stocks" class="selected-stock" ng-click="removeStock(stock.code)">
 						{{stock.code}}
 					</li>
 				</ul>
-				<input type="text" ng-model="stock_to_add">
-				<button type="button" ng-click="addStock(stock_to_add)">Add stock</button>
 			</div>
 		</div>
 
