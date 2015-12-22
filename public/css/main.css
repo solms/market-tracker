@@ -19,7 +19,6 @@ body{
   border: dotted #2980b9 2px;
   text-decoration: none;
 }
-
 .selected-stock:hover {
   background: #2980b9;
 	color: #FFFFFF;
@@ -44,6 +43,7 @@ path{
 
 /*  Style the timeframe buttons */
 .timeframe-btn {
+	margin-top: 10px;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
   background-image: -moz-linear-gradient(top, #3498db, #2980b9);

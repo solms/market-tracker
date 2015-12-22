@@ -11,6 +11,9 @@
 				// Initialise stock object array
 				var stocks_arr = [];
 
+				// Set up the timeframe variable to default to 1 week
+				var timeframe = 7;
+
 				// Set up graphing area
 				var outerWidth  = 1100,
 						outerHeight = 350;
@@ -129,7 +132,7 @@
 					var date 						= new Date();
 					var yql_end_date 		= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
 					console.log('End date: ' + yql_end_date);
-					date.setDate(date.getDate()-365);
+					date.setDate(date.getDate()-timeframe);
 					var yql_start_date 	= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
 					console.log('Start date: ' + yql_start_date);
 
@@ -204,6 +207,12 @@
 						name: results[0].Symbol,
 						values: stock_values
 					});
+				}
+
+				// Change the time frame of the graph, and update it
+				$scope.changeTimeframe = function(tf){
+					timeframe = tf;
+					showStocks();
 				}
 		}]);
 })();

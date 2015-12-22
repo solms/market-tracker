@@ -15,10 +15,15 @@
 
 			</div>
 			<div id="timeframe">
-				<button type="button" class="timeframe-btn">DAY</button>
-				<button type="button" class="timeframe-btn">WEEK</button>
-				<button type="button" class="timeframe-btn">MONTH</button>
-				<button type="button" class="timeframe-btn">YEAR</button>
+				<button type="button" class="timeframe-btn" ng-click="changeTimeframe(7)">
+					WEEK
+				</button>
+				<button type="button" class="timeframe-btn" ng-click="changeTimeframe(31)">
+					MONTH
+				</button>
+				<button type="button" class="timeframe-btn" ng-click="changeTimeframe(365)">
+					YEAR
+				</button>
 			</div>
 			<div id="selected-stocks">
 				<ul>
