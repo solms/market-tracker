@@ -1,6 +1,6 @@
 - Fix axis
 - Different colours
-- Make dates show on X axis
 - Make time frame variable
 - Make graph width reactive
 - Make stock codes searchable
+- Make it pretty

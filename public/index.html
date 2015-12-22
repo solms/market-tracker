@@ -14,8 +14,13 @@
 			<div id="graph-div">
 
 			</div>
+			<div id="timeframe">
+				<button type="button" class="timeframe-btn">DAY</button>
+				<button type="button" class="timeframe-btn">WEEK</button>
+				<button type="button" class="timeframe-btn">MONTH</button>
+				<button type="button" class="timeframe-btn">YEAR</button>
+			</div>
 			<div id="selected-stocks">
-				<hr>
 				<ul>
 					<li ng-repeat="stock in stocks" class="selected-stock" ng-click="removeStock(stock.code)">
 						{{stock.code}}

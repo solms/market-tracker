@@ -4,13 +4,29 @@ body{
 }
 
 /* Style the selected stocks */
-.selected-stock{
+.selected-stock {
 	display: inline-block;
 	list-style-type: none;
-	width: 100px;
-	background-color: #AA55B0;
 	margin: 5px;
+  -webkit-border-radius: 15;
+  -moz-border-radius: 15;
+  border-radius: 15px;
+  font-family: Arial;
+  color: #2980b9;
+  font-size: 14px;
+  background: #FFF;
+  padding: 10px 20px 10px 20px;
+  border: dotted #2980b9 2px;
+  text-decoration: none;
 }
+
+.selected-stock:hover {
+  background: #2980b9;
+	color: #FFFFFF;
+  text-decoration: none;
+	cursor: pointer;
+}
+
 
 /* Style the SVG element */
 #graph-div{
@@ -24,4 +40,30 @@ path{
 	fill: none;
 	stroke: black;
 	stroke-width: 2px;
+}
+
+/*  Style the timeframe buttons */
+.timeframe-btn {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.timeframe-btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+	cursor: pointer;
 }
