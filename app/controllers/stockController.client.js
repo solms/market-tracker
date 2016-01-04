@@ -85,6 +85,7 @@
 								getStockInfo($scope.stocks[i].code)
 									.success(function(data){
 										// Redundant, but check that the data exists anyway
+										console.log(data);
 										var results = data.query.results.quote;
 										if(results != null){
 											console.log('Successfully got data via YQL.');
@@ -131,10 +132,10 @@
 				// Retrieve the stock data from YQL finance
 				var getStockInfo = function(symbol){
 					var date 						= new Date();
-					var yql_end_date 		= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+					var yql_end_date 		= date.getFullYear()+'-'+(Number(date.getMonth())+1)+'-'+date.getDate();
 					console.log('End date: ' + yql_end_date);
 					date.setDate(date.getDate()-timeframe);
-					var yql_start_date 	= date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+					var yql_start_date 	= date.getFullYear()+'-'+(Number(date.getMonth())+1)+'-'+date.getDate();
 					console.log('Start date: ' + yql_start_date);
 
 					return $http.get('http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.historicaldata where symbol = "' + symbol + '" and startDate = "'+yql_start_date+'" and endDate = "'+yql_end_date+'"&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys');
