@@ -1,6 +1,0 @@
-- Fix axis
-- Different colours
-- Make time frame variable
-- Make graph width reactive
-- Make stock codes searchable
-- Use linear regression to do oversimplified predictions

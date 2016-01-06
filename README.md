@@ -1,2 +1,2 @@
 #Market Tracker
-A proper readme is on its way.
+An web application that allows you to graph the closing prices of various stocks.
